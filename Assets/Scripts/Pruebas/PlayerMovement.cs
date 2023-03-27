@@ -8,8 +8,10 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] Transform groundCheckCollider;
     [SerializeField] private bool _isGrounded, doubleJump;
     
-    private float _horizontalInput, speed = 5.0f, force;
+    private float _horizontalInput, speed = 5.0f;
+    public float force;
     private Rigidbody2D _rb;
+
     void Start()
     {
         _rb = GetComponent<Rigidbody2D>();
@@ -20,23 +22,24 @@ public class PlayerMovement : MonoBehaviour
     {
         //Movimiento horizontal
         _horizontalInput = Input.GetAxis("Horizontal");
-        transform.Translate(Vector3.right * (_horizontalInput * speed * Time.deltaTime));
+        _rb.velocity = new Vector2(_horizontalInput * speed, _rb.velocity.y);
+        
         //Salto
         if (Input.GetKey("space")&& _isGrounded)
         {
-            if (force < 30)
+            if (force < 40)
             {
-                force += 30 * Time.deltaTime;
+                force += 50 * Time.deltaTime;
             }
         }
         else if (Input.GetKeyUp("space"))
         {
-            _rb.AddForce(transform.up * force,ForceMode2D.Impulse);
-            if (doubleJump)
+            _rb.AddForce(Vector3.up * force,ForceMode2D.Impulse);
+            /*if (doubleJump)
             {
-                _rb.AddForce(transform.up * 80,ForceMode2D.Impulse);
+                _rb.AddForce(Vector3.up * 50,ForceMode2D.Impulse);
                 doubleJump = false;
-            }
+            }*/
             force = 0;
         }
     }
