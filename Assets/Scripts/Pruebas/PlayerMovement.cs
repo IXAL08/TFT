@@ -6,46 +6,56 @@ public class PlayerMovement : MonoBehaviour
     [Header("Jump")]
     [SerializeField] private LayerMask groundLayerMask;
     [SerializeField] Transform groundCheckCollider;
-    [SerializeField] private bool _isGrounded, doubleJump;
+    [SerializeField] private bool _isGrounded, doubleJump = true;
     
     private float _horizontalInput, speed = 5.0f;
-    public float force;
+    public float jumpforce;
     private Rigidbody2D _rb;
+    private bool facingRight = true;
 
     void Start()
     {
         _rb = GetComponent<Rigidbody2D>();
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        //Movimiento horizontal
-        _horizontalInput = Input.GetAxis("Horizontal");
-        _rb.velocity = new Vector2(_horizontalInput * speed, _rb.velocity.y);
+        //DobleSalto
+        if (Input.GetKeyDown(KeyCode.E) && doubleJump && _isGrounded == false)
+        {
+            _rb.velocity = Vector2.up * 5;
+            doubleJump = false;
+        }
         
         //Salto
         if (Input.GetKey("space")&& _isGrounded)
         {
-            if (force < 40)
+            if (jumpforce < 35)
             {
-                force += 50 * Time.deltaTime;
+                jumpforce += 50 * Time.deltaTime;
             }
         }
         else if (Input.GetKeyUp("space"))
         {
-            _rb.AddForce(Vector3.up * force,ForceMode2D.Impulse);
-            /*if (doubleJump)
-            {
-                _rb.AddForce(Vector3.up * 50,ForceMode2D.Impulse);
-                doubleJump = false;
-            }*/
-            force = 0;
+            _rb.AddForce(Vector3.up * jumpforce,ForceMode2D.Impulse);
+            jumpforce = 0;
         }
     }
 
     private void FixedUpdate()
     {
+        //Movimiento horizontal
+        _horizontalInput = Input.GetAxis("Horizontal");
+        _rb.velocity = new Vector2(_horizontalInput * speed, _rb.velocity.y);
+
+        //Flip
+        if (facingRight == false && _horizontalInput > 0)
+        {
+            Flip();
+        } else if (facingRight && _horizontalInput < 0)
+        {
+            Flip();
+        }
         //  GroundCheck
         GroundCheck();
     }
@@ -60,5 +70,14 @@ public class PlayerMovement : MonoBehaviour
             _isGrounded = true;
             doubleJump = true;
         }
+    }
+    
+    //Cambio de dirección
+    private void Flip()
+    {
+        facingRight = !facingRight;
+        Vector3 Scaler = transform.localScale;
+        Scaler.x *= -1;
+        transform.localScale = Scaler;
     }
 }
