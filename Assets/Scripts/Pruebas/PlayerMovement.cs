@@ -7,9 +7,8 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private LayerMask groundLayerMask;
     [SerializeField] Transform groundCheckCollider;
     [SerializeField] private bool _isGrounded, doubleJump = true;
-    
+    [Range(1, 10)] public int JumpVelocity;
     private float _horizontalInput, speed = 5.0f;
-    public float jumpforce;
     private Rigidbody2D _rb;
     private bool facingRight = true;
 
@@ -28,17 +27,10 @@ public class PlayerMovement : MonoBehaviour
         }
         
         //Salto
-        if (Input.GetKey("space")&& _isGrounded)
+        if (Input.GetKeyDown(KeyCode.Space) && _isGrounded)
         {
-            if (jumpforce < 35)
-            {
-                jumpforce += 50 * Time.deltaTime;
-            }
-        }
-        else if (Input.GetKeyUp("space"))
-        {
-            _rb.AddForce(Vector3.up * jumpforce,ForceMode2D.Impulse);
-            jumpforce = 0;
+            _rb.velocity += Vector2.up * JumpVelocity;
+
         }
     }
 
@@ -79,5 +71,21 @@ public class PlayerMovement : MonoBehaviour
         Vector3 Scaler = transform.localScale;
         Scaler.x *= -1;
         transform.localScale = Scaler;
+    }
+    
+    private void OnCollisionEnter2D(Collision2D col)
+    {
+        if (col.gameObject.CompareTag("PlataformaMovible"))
+        {
+            transform.parent = col.transform;
+        }
+    }
+    
+    private void OnCollisionExit2D(Collision2D col)
+    {
+        if (col.gameObject.CompareTag("PlataformaMovible"))
+        {
+            transform.parent = null;
+        }
     }
 }
