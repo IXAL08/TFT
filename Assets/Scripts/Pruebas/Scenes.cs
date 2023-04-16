@@ -1,19 +1,28 @@
+using System;
 using UnityEngine;
 
 public class Scenes : MonoBehaviour
 {
-    [SerializeField] private Camera _camera;
-    [SerializeField] private GameObject CambiodeNivel;
- 
+    [SerializeField] private Transform player;
 
-    private void OnTriggerEnter2D(Collider2D col)
+    private float cameraSize, alturaPantalla;
+    
+    private void Start()
     {
-        if (col.CompareTag("Player"))
-        {
-            _camera.transform.position = new Vector3(0, (_camera.transform.position.y + 10),-10);
-            CambiodeNivel.SetActive(false);
+        cameraSize = Camera.main.orthographicSize;
+        alturaPantalla = cameraSize * 2;
+    }
 
-        }
-        
+    private void Update()
+    {
+        CalcularPositionCamera();
+    }
+
+    void CalcularPositionCamera()
+    {
+        int pantallaPersonaje = (int)(player.position.y / alturaPantalla);
+        float alturacamara = (pantallaPersonaje * alturaPantalla) + cameraSize;
+
+        transform.position = new Vector3(transform.position.x, alturacamara, transform.position.z);
     }
 }

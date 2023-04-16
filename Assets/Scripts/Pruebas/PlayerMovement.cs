@@ -3,13 +3,14 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
+
     [Header("Jump")]
     [SerializeField] private LayerMask groundLayerMask;
     [SerializeField] Transform groundCheckCollider;
-    [SerializeField] private bool _isGrounded, doubleJump = true;
+    [SerializeField] public bool _isGrounded, doubleJump = true;
     [Range(1, 10)] public int JumpVelocity;
-    private float _horizontalInput, speed = 5.0f;
-    private Rigidbody2D _rb;
+    public float _horizontalInput, speed = 5.0f;
+    public Rigidbody2D _rb;
     private bool facingRight = true;
 
     void Start()
@@ -19,19 +20,14 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
-        //DobleSalto
-        if (Input.GetKeyDown(KeyCode.E) && doubleJump && _isGrounded == false)
-        {
-            _rb.velocity = Vector2.up * 5;
-            doubleJump = false;
-        }
-        
+
         //Salto
         if (Input.GetKeyDown(KeyCode.Space) && _isGrounded)
         {
             _rb.velocity += Vector2.up * JumpVelocity;
 
         }
+   
     }
 
     private void FixedUpdate()
