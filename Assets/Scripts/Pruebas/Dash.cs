@@ -27,8 +27,7 @@ public class Dash : MonoBehaviour
         {
             StartCoroutine(StopDashing());
         }
-        
-        
+                
     }
 
     private IEnumerator StopDashing()

@@ -5051,6 +5051,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 7039057857014393446, guid: 733fa1b95282b9c458e772faad0274be, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 3.62
+      objectReference: {fileID: 0}
+    - target: {fileID: 7039057857014393446, guid: 733fa1b95282b9c458e772faad0274be, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 9
+      objectReference: {fileID: 0}
     - target: {fileID: 7039057857023750756, guid: 733fa1b95282b9c458e772faad0274be, type: 3}
       propertyPath: m_Name
       value: Plataformas
@@ -5098,6 +5106,10 @@ PrefabInstance:
     - target: {fileID: 7039057857023750762, guid: 733fa1b95282b9c458e772faad0274be, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7039057857457866139, guid: 733fa1b95282b9c458e772faad0274be, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 7039057858665305745, guid: 733fa1b95282b9c458e772faad0274be, type: 3}
       propertyPath: m_Layer

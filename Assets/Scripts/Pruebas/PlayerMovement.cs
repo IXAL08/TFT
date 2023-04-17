@@ -27,7 +27,7 @@ public class PlayerMovement : MonoBehaviour
             _rb.velocity += Vector2.up * JumpVelocity;
 
         }
-   
+        
     }
 
     private void FixedUpdate()
@@ -84,4 +84,6 @@ public class PlayerMovement : MonoBehaviour
             transform.parent = null;
         }
     }
+
+    
 }
