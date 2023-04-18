@@ -5,11 +5,12 @@ TagManager:
   serializedVersion: 2
   tags:
   - PlataformaMovible
+  - Hook
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - GrappleHook
   - Water
   - UI
   - Ground

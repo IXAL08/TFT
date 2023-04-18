@@ -3,13 +3,13 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-
+    public Hook gh;
     [Header("Jump")]
     [SerializeField] private LayerMask groundLayerMask;
     [SerializeField] Transform groundCheckCollider;
     [SerializeField] public bool _isGrounded, doubleJump = true;
     [Range(1, 10)] public int JumpVelocity;
-    public float _horizontalInput, speed = 5.0f;
+    public float _horizontalInput, speed = 1.0f;
     public Rigidbody2D _rb;
     private bool facingRight = true;
 
@@ -20,7 +20,10 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
-
+        //Movimiento horizontal
+        _horizontalInput = Input.GetAxis("Horizontal");
+        _rb.velocity = new Vector2(_horizontalInput * speed, _rb.velocity.y);
+        
         //Salto
         if (Input.GetKeyDown(KeyCode.Space) && _isGrounded)
         {
@@ -28,13 +31,14 @@ public class PlayerMovement : MonoBehaviour
 
         }
         
+
+        //  GroundCheck
+        GroundCheck();
     }
 
     private void FixedUpdate()
     {
-        //Movimiento horizontal
-        _horizontalInput = Input.GetAxis("Horizontal");
-        _rb.velocity = new Vector2(_horizontalInput * speed, _rb.velocity.y);
+
 
         //Flip
         if (facingRight == false && _horizontalInput > 0)
@@ -44,8 +48,13 @@ public class PlayerMovement : MonoBehaviour
         {
             Flip();
         }
-        //  GroundCheck
-        GroundCheck();
+        
+
+        if (gh.retracting)
+        {
+            _rb.velocity = Vector2.zero;
+        }
+
     }
     
     //Funcion para el salto
@@ -75,6 +84,7 @@ public class PlayerMovement : MonoBehaviour
         {
             transform.parent = col.transform;
         }
+        
     }
     
     private void OnCollisionExit2D(Collision2D col)
