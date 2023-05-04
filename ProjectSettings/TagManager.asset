@@ -6,6 +6,7 @@ TagManager:
   tags:
   - PlataformaMovible
   - Hook
+  - Vanish
   layers:
   - Default
   - TransparentFX

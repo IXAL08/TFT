@@ -17,7 +17,7 @@ public class Doublejump : MonoBehaviour
         //DobleSalto
         if (Input.GetKeyDown(KeyCode.E) && _playerMovement.doubleJump && _playerMovement._isGrounded == false)
         {
-            _playerMovement._rb.velocity = Vector2.up * 5;
+            _playerMovement._rb.velocity = Vector2.up * 6;
             _playerMovement.doubleJump = false;
         }
     }
