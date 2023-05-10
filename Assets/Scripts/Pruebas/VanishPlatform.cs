@@ -25,11 +25,11 @@ public class VanishPlatform : MonoBehaviour
     {
         iniciador = false;
         colorPlataforma.color = Color.green;
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(0.8f);
         colorPlataforma.color = Color.yellow;
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(0.8f);
         colorPlataforma.color = Color.red;
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(0.8f);
         _platform.enabled = !_platform.enabled;
         colorPlataforma.enabled = !colorPlataforma.enabled;
         yield return new WaitForSeconds(5f);
