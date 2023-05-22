@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -23,7 +24,8 @@ public class PlayerMovement : MonoBehaviour
         //Movimiento horizontal
         _horizontalInput = Input.GetAxis("Horizontal");
         _rb.velocity = new Vector2(_horizontalInput * speed, _rb.velocity.y);
-        
+        Vector3 move = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
+
         //Salto
         if (Input.GetKeyDown(KeyCode.Space) && _isGrounded)
         {
@@ -84,6 +86,11 @@ public class PlayerMovement : MonoBehaviour
         {
             transform.parent = col.transform;
         }
+
+        if (col.gameObject.CompareTag("Pinchos"))
+        {
+            _rb.AddForce(_rb.transform.position * -1, ForceMode2D.Impulse);
+        }
         
     }
     
@@ -95,5 +102,8 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    
+    public void OnMove(InputAction.CallbackContext ctx)
+    {
+        _rb.velocity = ctx.ReadValue<Vector2>();
+    }
 }

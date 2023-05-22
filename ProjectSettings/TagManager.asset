@@ -8,6 +8,7 @@ TagManager:
   - Hook
   - Vanish
   - Audio
+  - Pinchos
   layers:
   - Default
   - TransparentFX
