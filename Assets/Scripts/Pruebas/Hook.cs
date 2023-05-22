@@ -21,7 +21,7 @@ public class Hook : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Q) && !isGrappling)
+        if (Input.GetKeyDown(KeyCode.P) && !isGrappling)
         {
             StartGrapple();
         }
