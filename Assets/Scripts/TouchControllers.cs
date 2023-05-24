@@ -1,0 +1,133 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class TouchControllers : MonoBehaviour
+{
+    public Joystick joystick;
+    public float velocidad;
+    private float _horizontalInput, _verticalInput;
+    public Rigidbody2D rb;
+    private bool facingRight = true;
+    
+    [Header("Jump")]
+    [SerializeField] private LayerMask groundLayerMask;
+    [SerializeField] Transform groundCheckCollider;
+    [SerializeField] public bool _isGrounded, doubleJump = true;
+    [Range(1, 10)] public int JumpVelocity;
+    public bool isJumping;
+    
+    [Header("Dashing")] 
+    [SerializeField] private float dashingPower = 14f;
+    [SerializeField] private float dashingTime = 0.2f;
+    [SerializeField] private float dashingCooldown = 3.0f;
+    private Vector2 _dashingDirection;
+    public bool _isDashing, _canDash = true;
+    private TrailRenderer _trailRenderer;
+
+    void Start()
+    {
+        rb = GetComponent<Rigidbody2D>();
+    }
+    private void Update()
+    {
+        //Vertical movement
+        _verticalInput = joystick.Vertical;
+        //horizontal movement
+        _horizontalInput = joystick.Horizontal;
+        rb.velocity = new Vector2(_horizontalInput * velocidad, rb.velocity.y);
+        
+        GroundCheck();
+        
+        if (Input.GetKeyDown(KeyCode.Space) && _isGrounded)
+        {
+            rb.velocity += Vector2.up * JumpVelocity;
+
+        }
+        var dashInput = Input.GetButtonDown("Dash");
+        if (dashInput && _canDash)
+        {
+            StartCoroutine(StopDashing());
+        }
+    }
+
+    private void FixedUpdate()
+    {
+        //Flip
+        if (facingRight == false && _horizontalInput > 0)
+        {
+            Flip();
+        } else if (facingRight && _horizontalInput < 0)
+        {
+            Flip();
+        }
+    }
+    
+    //Jump function
+    public void Jump()
+    {
+        if (_isGrounded)
+        {
+            rb.velocity += Vector2.up * JumpVelocity;
+            isJumping = true;
+        }
+    }
+    
+    //DoubleJump Function
+    public void DoubleJump()
+    {
+        if (doubleJump && _isGrounded == false)
+        {
+            rb.velocity = Vector2.up * 6;
+            doubleJump = false;
+        }
+    }
+    
+    //Dash Function
+    public void Dash()
+    {
+        if (_canDash)
+        {
+            StartCoroutine(StopDashing());
+        }
+    }
+    
+    //SpriteFlip Function
+    private void Flip()
+    {
+        facingRight = !facingRight;
+        Vector3 Scaler = transform.localScale;
+        Scaler.x *= -1;
+        transform.localScale = Scaler;
+    }
+    
+    //GroundCheck Function
+    private void GroundCheck()
+    {
+        _isGrounded = false;
+        Collider2D[] colliders = Physics2D.OverlapCircleAll(groundCheckCollider.position, 0.2f, groundLayerMask);
+        if (colliders.Length > 0)
+        {
+            _isGrounded = true;
+            doubleJump = true;
+            isJumping = false;
+        }
+    }
+    
+    //Dashing Enumerator
+    private IEnumerator StopDashing()
+    {
+        _canDash = false;
+        _isDashing = true;
+        float originalGravity = rb.gravityScale;
+        rb.gravityScale = 0f;
+        rb.velocity = new Vector2(_horizontalInput * dashingPower, _verticalInput * dashingPower);
+        //_trailRenderer.emitting = true;
+        yield return new WaitForSeconds(dashingTime);
+        //_trailRenderer.emitting = false;
+        rb.gravityScale = originalGravity;
+        _isDashing = false;
+        yield return new WaitForSeconds(dashingCooldown);
+        _canDash = true;
+    }
+}

@@ -16,6 +16,7 @@ public class Scenes : MonoBehaviour
     private void Update()
     {
         CalcularPositionCamera();
+        
     }
 
     void CalcularPositionCamera()

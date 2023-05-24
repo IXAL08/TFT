@@ -13,6 +13,8 @@ public class PlayerMovement : MonoBehaviour
     public float _horizontalInput, speed = 1.0f;
     public Rigidbody2D _rb;
     private bool facingRight = true;
+    public Joystick joystick;
+    
 
     void Start()
     {
@@ -24,7 +26,8 @@ public class PlayerMovement : MonoBehaviour
         //Movimiento horizontal
         _horizontalInput = Input.GetAxis("Horizontal");
         _rb.velocity = new Vector2(_horizontalInput * speed, _rb.velocity.y);
-        Vector3 move = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
+        //_rb.velocity = new Vector2(joystick.Horizontal * speed, _rb.velocity.y);
+
 
         //Salto
         if (Input.GetKeyDown(KeyCode.Space) && _isGrounded)
@@ -40,7 +43,6 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-
 
         //Flip
         if (facingRight == false && _horizontalInput > 0)
@@ -101,9 +103,5 @@ public class PlayerMovement : MonoBehaviour
             transform.parent = null;
         }
     }
-
-    public void OnMove(InputAction.CallbackContext ctx)
-    {
-        _rb.velocity = ctx.ReadValue<Vector2>();
-    }
+    
 }
