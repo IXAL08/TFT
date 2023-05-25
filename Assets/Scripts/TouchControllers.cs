@@ -24,10 +24,22 @@ public class TouchControllers : MonoBehaviour
     private Vector2 _dashingDirection;
     public bool _isDashing, _canDash = true;
     private TrailRenderer _trailRenderer;
+    
+    [Header("Gancho")]
+    private LineRenderer line;
+    [SerializeField] private LayerMask grapplableMask;
+    [SerializeField] private float maxDistance = 10f;
+    [SerializeField] private float grappleSpeed = 10f;
+    [SerializeField] private float grappleShootSpeed = 20f;
+    [SerializeField] private bool isGrappling;
+    [HideInInspector] public bool retracting;
+    private Vector2 target;
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        _trailRenderer = GetComponent<TrailRenderer>();
+        line = GetComponent<LineRenderer>();
     }
     private void Update()
     {
@@ -48,6 +60,20 @@ public class TouchControllers : MonoBehaviour
         if (dashInput && _canDash)
         {
             StartCoroutine(StopDashing());
+        }
+
+        if (retracting)
+        {
+            Vector2 grapplePos = Vector2.Lerp(transform.position, target, grappleSpeed * Time.deltaTime);
+            transform.position = grapplePos;
+            line.SetPosition(0, transform.position);
+
+            if (Vector2.Distance(transform.position,target) < 0.5f)
+            {
+                retracting = false;
+                isGrappling = false;
+                line.enabled = false;
+            }
         }
     }
 
@@ -92,6 +118,15 @@ public class TouchControllers : MonoBehaviour
         }
     }
     
+    //Hook function
+    public void Hook()
+    {
+        if (!isGrappling)
+        {
+            StartGrapple();
+        }
+    }
+    
     //SpriteFlip Function
     private void Flip()
     {
@@ -113,6 +148,22 @@ public class TouchControllers : MonoBehaviour
             isJumping = false;
         }
     }
+    //Hook iniciador
+    private void StartGrapple()
+    {
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, joystick.Direction, maxDistance, grapplableMask);
+
+        if (hit.collider != null)
+        {
+            isGrappling = true;
+            target = hit.point;
+            line.enabled = true;
+            line.positionCount = 2;
+
+            StartCoroutine(Grapple());
+        }
+        
+    }
     
     //Dashing Enumerator
     private IEnumerator StopDashing()
@@ -122,12 +173,33 @@ public class TouchControllers : MonoBehaviour
         float originalGravity = rb.gravityScale;
         rb.gravityScale = 0f;
         rb.velocity = new Vector2(_horizontalInput * dashingPower, _verticalInput * dashingPower);
-        //_trailRenderer.emitting = true;
+        _trailRenderer.emitting = true;
         yield return new WaitForSeconds(dashingTime);
-        //_trailRenderer.emitting = false;
+        _trailRenderer.emitting = false;
         rb.gravityScale = originalGravity;
         _isDashing = false;
         yield return new WaitForSeconds(dashingCooldown);
         _canDash = true;
+    }
+    
+    //hook Enumerator
+    IEnumerator Grapple()
+    {
+        float t = 0;
+        float time = 10f;
+        line.SetPosition(0, transform.position);
+        line.SetPosition(1,transform.position);
+        Vector2 newPos;
+
+        for (; t < time; t += grappleShootSpeed * Time.deltaTime)
+        {
+            newPos = Vector2.Lerp(transform.position, target, t / time);
+            line.SetPosition(0,transform.position);
+            line.SetPosition(1,newPos);
+            yield return null;
+        }
+        
+        line.SetPosition(1,target);
+        retracting = true;
     }
 }
