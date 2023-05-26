@@ -25,6 +25,7 @@ public class TouchControllers : MonoBehaviour
     public bool _isDashing, _canDash = true;
     private TrailRenderer _trailRenderer;
     
+    
     [Header("Gancho")]
     private LineRenderer line;
     [SerializeField] private LayerMask grapplableMask;
@@ -50,6 +51,11 @@ public class TouchControllers : MonoBehaviour
         rb.velocity = new Vector2(_horizontalInput * velocidad, rb.velocity.y);
         
         GroundCheck();
+        if (Input.GetKeyDown(KeyCode.P) && !isGrappling)
+        {
+           StartGrapple();
+        }
+                
         
         if (Input.GetKeyDown(KeyCode.Space) && _isGrounded)
         {
@@ -64,6 +70,7 @@ public class TouchControllers : MonoBehaviour
 
         if (retracting)
         {
+            Debug.Log("Animación gancho");
             Vector2 grapplePos = Vector2.Lerp(transform.position, target, grappleSpeed * Time.deltaTime);
             transform.position = grapplePos;
             line.SetPosition(0, transform.position);
