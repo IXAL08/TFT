@@ -33,6 +33,7 @@ public class TouchControllers : MonoBehaviour
     [SerializeField] private float grappleSpeed = 10f;
     [SerializeField] private float grappleShootSpeed = 20f;
     [SerializeField] private bool isGrappling;
+    [SerializeField] private float hookcooldown = 3.99f;
     [HideInInspector] public bool retracting;
     private Vector2 target;
 
@@ -70,12 +71,11 @@ public class TouchControllers : MonoBehaviour
 
         if (retracting)
         {
-            Debug.Log("Animación gancho");
             Vector2 grapplePos = Vector2.Lerp(transform.position, target, grappleSpeed * Time.deltaTime);
             transform.position = grapplePos;
             line.SetPosition(0, transform.position);
 
-            if (Vector2.Distance(transform.position,target) < 0.5f)
+            if (Vector2.Distance(transform.position,target) < 0.6f)
             {
                 retracting = false;
                 isGrappling = false;
@@ -93,6 +93,11 @@ public class TouchControllers : MonoBehaviour
         } else if (facingRight && _horizontalInput < 0)
         {
             Flip();
+        }
+        
+        if (retracting)
+        {
+            rb.velocity = Vector2.zero;
         }
     }
     
@@ -208,5 +213,6 @@ public class TouchControllers : MonoBehaviour
         
         line.SetPosition(1,target);
         retracting = true;
+        
     }
 }
