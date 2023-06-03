@@ -61,7 +61,11 @@ public class TouchControllers : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space) && _isGrounded)
         {
             rb.velocity += Vector2.up * JumpVelocity;
-
+        }
+        if (Input.GetKeyDown(KeyCode.Space) && doubleJump && _isGrounded == false)
+        {
+            rb.velocity = Vector2.up * 6;
+            doubleJump = false;
         }
         var dashInput = Input.GetButtonDown("Dash");
         if (dashInput && _canDash)
@@ -212,7 +216,27 @@ public class TouchControllers : MonoBehaviour
         }
         
         line.SetPosition(1,target);
-        retracting = true;
+        retracting = true;   
+    }
+    
+    private void OnCollisionEnter2D(Collision2D col)
+    {
+        if (col.gameObject.CompareTag("PlataformaMovible"))
+        {
+            transform.parent = col.transform;
+        }
+    
+        if (col.gameObject.CompareTag("Pinchos"))
+        {
+            rb.AddForce(rb.transform.position * -1, ForceMode2D.Impulse);
+        }
+    }
         
+    private void OnCollisionExit2D(Collision2D col)
+    {
+        if (col.gameObject.CompareTag("PlataformaMovible"))
+        {
+            transform.parent = null;
+        }
     }
 }
