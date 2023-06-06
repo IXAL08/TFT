@@ -112,6 +112,7 @@ public class TouchControllers : MonoBehaviour
         {
             rb.velocity += Vector2.up * JumpVelocity;
             isJumping = true;
+            Debug.Log("Salto");
         }
     }
     
@@ -122,6 +123,7 @@ public class TouchControllers : MonoBehaviour
         {
             rb.velocity = Vector2.up * 6;
             doubleJump = false;
+            Debug.Log("Doble Salto");
         }
     }
     
@@ -156,7 +158,7 @@ public class TouchControllers : MonoBehaviour
     private void GroundCheck()
     {
         _isGrounded = false;
-        Collider2D[] colliders = Physics2D.OverlapCircleAll(groundCheckCollider.position, 0.2f, groundLayerMask);
+        Collider2D[] colliders = Physics2D.OverlapCircleAll(groundCheckCollider.position, 0.3f, groundLayerMask);
         if (colliders.Length > 0)
         {
             _isGrounded = true;
