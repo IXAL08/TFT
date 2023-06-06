@@ -9,6 +9,8 @@ public class TouchControllers : MonoBehaviour
     private float _horizontalInput, _verticalInput;
     public Rigidbody2D rb;
     private bool facingRight = true;
+
+    private Animator anim;
     
     [Header("Jump")]
     [SerializeField] private LayerMask groundLayerMask;
@@ -42,6 +44,7 @@ public class TouchControllers : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         _trailRenderer = GetComponent<TrailRenderer>();
         line = GetComponent<LineRenderer>();
+        anim = GetComponent<Animator>();
     }
     private void Update()
     {
@@ -49,6 +52,16 @@ public class TouchControllers : MonoBehaviour
         _verticalInput = joystick.Vertical;
         //horizontal movement
         _horizontalInput = joystick.Horizontal;
+
+        if (_horizontalInput != 0f)
+        {
+            anim.SetBool("isRunning",true);
+        }
+        else
+        {
+            anim.SetBool("isRunning",false);
+        }
+        
         rb.velocity = new Vector2(_horizontalInput * velocidad, rb.velocity.y);
         
         GroundCheck();
@@ -61,11 +74,14 @@ public class TouchControllers : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space) && _isGrounded)
         {
             rb.velocity += Vector2.up * JumpVelocity;
+            //anim.SetBool("isGrounded", false);
         }
+  
         if (Input.GetKeyDown(KeyCode.Space) && doubleJump && _isGrounded == false)
         {
             rb.velocity = Vector2.up * 6;
             doubleJump = false;
+            //anim.SetBool("isGrounded", true);
         }
         var dashInput = Input.GetButtonDown("Dash");
         if (dashInput && _canDash)
@@ -113,6 +129,16 @@ public class TouchControllers : MonoBehaviour
             rb.velocity += Vector2.up * JumpVelocity;
             isJumping = true;
         }
+
+        if(isJumping == true)
+        {
+            anim.SetBool("isGrounded", false);
+        }
+        else
+        {
+            anim.SetBool("isGrounded", true);
+        }
+        
     }
     
     //DoubleJump Function
@@ -122,6 +148,7 @@ public class TouchControllers : MonoBehaviour
         {
             rb.velocity = Vector2.up * 6;
             doubleJump = false;
+            //anim.SetBool("isGrounded", true);
         }
     }
     
