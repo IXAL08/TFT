@@ -9,6 +9,8 @@ TagManager:
   - Vanish
   - Audio
   - Pinchos
+  - PinchosIzquierda
+  - PinchosDerecha
   layers:
   - Default
   - TransparentFX

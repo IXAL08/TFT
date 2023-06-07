@@ -9,7 +9,7 @@ public class TouchControllers : MonoBehaviour
     private float _horizontalInput, _verticalInput;
     public Rigidbody2D rb;
     private bool facingRight = true;
-    
+
     [Header("Jump")]
     [SerializeField] private LayerMask groundLayerMask;
     [SerializeField] Transform groundCheckCollider;
@@ -52,7 +52,7 @@ public class TouchControllers : MonoBehaviour
         rb.velocity = new Vector2(_horizontalInput * velocidad, rb.velocity.y);
         
         GroundCheck();
-        if (Input.GetKeyDown(KeyCode.P) && !isGrappling)
+        if (Input.GetKeyDown(KeyCode.Q) && !isGrappling)
         {
            StartGrapple();
         }
@@ -230,7 +230,21 @@ public class TouchControllers : MonoBehaviour
     
         if (col.gameObject.CompareTag("Pinchos"))
         {
-            rb.AddForce(rb.transform.position * -1, ForceMode2D.Impulse);
+            rb.AddForce(rb.transform.position * Vector2.down, ForceMode2D.Impulse);
+        }
+        if (col.gameObject.CompareTag("Pinchos"))
+        {
+            rb.AddForce(rb.transform.position * (Vector2.down * 3), ForceMode2D.Impulse);
+        }
+
+        if (col.gameObject.CompareTag("PinchosIzquierda"))
+        {
+            rb.AddForce(rb.transform.position * (Vector2.right * 3), ForceMode2D.Impulse);
+        }
+        
+        if (col.gameObject.CompareTag("PinchosDerecha"))
+        {
+            rb.AddForce(rb.transform.position * (Vector2.left * -3), ForceMode2D.Impulse);
         }
     }
         
