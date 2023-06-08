@@ -14321,6 +14321,7 @@ MonoBehaviour:
   joystick: {fileID: 1057779247}
   velocidad: 5
   rb: {fileID: 1523274117}
+  isHit: 0
   groundLayerMask:
     serializedVersion: 2
     m_Bits: 64
@@ -15301,7 +15302,7 @@ AudioSource:
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -15496,6 +15497,18 @@ MonoBehaviour:
       - m_Target: {fileID: 1523274118}
         m_TargetAssemblyTypeName: TouchControllers, Assembly-CSharp
         m_MethodName: DoubleJump
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1523274118}
+        m_TargetAssemblyTypeName: TouchControllers, Assembly-CSharp
+        m_MethodName: JumpAnim
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

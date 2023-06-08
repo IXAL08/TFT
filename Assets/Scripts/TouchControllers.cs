@@ -9,6 +9,8 @@ public class TouchControllers : MonoBehaviour
     private float _horizontalInput, _verticalInput;
     public Rigidbody2D rb;
     private bool facingRight = true;
+    private Animator animator;
+    public bool isHit = false;
 
     [Header("Jump")]
     [SerializeField] private LayerMask groundLayerMask;
@@ -42,6 +44,7 @@ public class TouchControllers : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         _trailRenderer = GetComponent<TrailRenderer>();
         line = GetComponent<LineRenderer>();
+        animator = GetComponent<Animator>();
     }
     private void Update()
     {
@@ -49,6 +52,16 @@ public class TouchControllers : MonoBehaviour
         _verticalInput = joystick.Vertical;
         //horizontal movement
         _horizontalInput = joystick.Horizontal;
+
+        if (_horizontalInput != 0)
+        {
+            animator.SetBool("isRunning", true);
+        }
+        else
+        {
+            animator.SetBool("isRunning", false);
+        }
+        
         rb.velocity = new Vector2(_horizontalInput * velocidad, rb.velocity.y);
         
         GroundCheck();
@@ -61,12 +74,36 @@ public class TouchControllers : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space) && _isGrounded)
         {
             rb.velocity += Vector2.up * JumpVelocity;
+            animator.SetBool("isGrounded",true);
+        }
+        else
+        {
+            animator.SetBool("isGrounded",false);
         }
         if (Input.GetKeyDown(KeyCode.Space) && doubleJump && _isGrounded == false)
         {
             rb.velocity = Vector2.up * 6;
             doubleJump = false;
         }
+
+        if (!_isGrounded && !isHit)
+        {
+            animator.SetBool("isGrounded",true);
+        }
+        else
+        {
+            animator.SetBool("isGrounded", false);
+        }
+
+        if (isHit)
+        {
+            animator.SetBool("isHit",true);
+        }
+        else
+        {
+            animator.SetBool("isHit", false);
+        }
+        
         var dashInput = Input.GetButtonDown("Dash");
         if (dashInput && _canDash)
         {
@@ -114,6 +151,7 @@ public class TouchControllers : MonoBehaviour
             isJumping = true;
             Debug.Log("Salto");
         }
+
     }
     
     //DoubleJump Function
@@ -158,12 +196,16 @@ public class TouchControllers : MonoBehaviour
     private void GroundCheck()
     {
         _isGrounded = false;
+        
+        
         Collider2D[] colliders = Physics2D.OverlapCircleAll(groundCheckCollider.position, 0.3f, groundLayerMask);
         if (colliders.Length > 0)
         {
             _isGrounded = true;
             doubleJump = true;
             isJumping = false;
+            isHit = false;
+            //Sanimator.SetBool("isGrounded",true);
         }
     }
     //Hook iniciador
@@ -227,24 +269,39 @@ public class TouchControllers : MonoBehaviour
         {
             transform.parent = col.transform;
         }
-    
+    /*
         if (col.gameObject.CompareTag("Pinchos"))
         {
             rb.AddForce(rb.transform.position * Vector2.down, ForceMode2D.Impulse);
-        }
+        }*/
         if (col.gameObject.CompareTag("Pinchos"))
         {
             rb.AddForce(rb.transform.position * (Vector2.down * 3), ForceMode2D.Impulse);
+            isHit = true;
+        }
+        else
+        {
+            isHit = false;
         }
 
         if (col.gameObject.CompareTag("PinchosIzquierda"))
         {
             rb.AddForce(rb.transform.position * (Vector2.right * 3), ForceMode2D.Impulse);
+            isHit = true;
+        }
+        else
+        {
+            isHit = false;
         }
         
         if (col.gameObject.CompareTag("PinchosDerecha"))
         {
             rb.AddForce(rb.transform.position * (Vector2.left * -3), ForceMode2D.Impulse);
+            isHit = true;
+        }
+        else
+        {
+            isHit = false;
         }
     }
         
