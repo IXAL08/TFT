@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,6 +9,8 @@ public class PauseMenu : MonoBehaviour
     [SerializeField] private GameObject pauseButton;
     [SerializeField] private GameObject pauseMenu;
     [SerializeField] private GameObject optionsMenu;
+    [SerializeField] private GameObject creditsMenu;
+    [SerializeField] private GameObject WinnerScreen;
 
     public void Pause()
     {
@@ -34,9 +37,38 @@ public class PauseMenu : MonoBehaviour
         optionsMenu.SetActive(false);
         pauseMenu.SetActive(true);
     }
-    public void Home(int SceneID)
+    public void Home()
     {
         Time.timeScale = 1f;
-        SceneManager.LoadScene(SceneID);
+        SceneManager.LoadScene(0);
+    }
+
+    public void Juego()
+    {
+        SceneManager.LoadScene(1);
+    }
+
+    public void Creditos()
+    {
+        creditsMenu.SetActive(true);
+    }
+    
+    public void regresar()
+    {
+        creditsMenu.SetActive(false);
+    }
+
+    private void OnCollisionEnter2D(Collision2D col)
+    {
+
+    }
+
+    private void OnTriggerEnter2D(Collider2D col)
+    {
+        if (col.gameObject.CompareTag("Player"))
+        {
+            WinnerScreen.SetActive(true);
+            Time.timeScale = 0f;
+        }
     }
 }

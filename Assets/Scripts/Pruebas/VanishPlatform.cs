@@ -24,9 +24,7 @@ public class VanishPlatform : MonoBehaviour
     private IEnumerator Desaparecer()
     {
         iniciador = false;
-        yield return new WaitForSeconds(1.0f);
-        yield return new WaitForSeconds(1.0f);
-        yield return new WaitForSeconds(1.0f);
+        yield return new WaitForSeconds(2.0f);
         _platform.enabled = !_platform.enabled;
         colorPlataforma.enabled = !colorPlataforma.enabled;
         yield return new WaitForSeconds(5f);
