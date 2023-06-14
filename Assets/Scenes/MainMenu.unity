@@ -572,6 +572,7 @@ GameObject:
   - component: {fileID: 422681106}
   - component: {fileID: 422681108}
   - component: {fileID: 422681107}
+  - component: {fileID: 422681109}
   m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
@@ -619,7 +620,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "cr\xE9ditos"
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 50b8b11cb7ec29547a9ad48e13854097, type: 2}
   m_sharedMaterial: {fileID: -8336773222943933363, guid: 50b8b11cb7ec29547a9ad48e13854097, type: 2}
@@ -696,6 +697,46 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 422681105}
   m_CullTransparentMesh: 1
+--- !u!114 &422681109
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 422681105}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56eb0353ae6e5124bb35b17aff880f16, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_StringReference:
+    m_TableReference:
+      m_TableCollectionName: GUID:6cf75b1bbc1d0f045a49a247a323383b
+    m_TableEntryReference:
+      m_KeyId: 1506236243968
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  m_FormatArguments: []
+  m_UpdateString:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 422681107}
+        m_TargetAssemblyTypeName: TMPro.TMP_Text, Unity.TextMeshPro
+        m_MethodName: set_text
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  references:
+    version: 2
+    RefIds: []
 --- !u!1 &584769932
 GameObject:
   m_ObjectHideFlags: 0
@@ -707,6 +748,7 @@ GameObject:
   - component: {fileID: 584769933}
   - component: {fileID: 584769935}
   - component: {fileID: 584769934}
+  - component: {fileID: 584769936}
   m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
@@ -754,7 +796,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Jugar
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 50b8b11cb7ec29547a9ad48e13854097, type: 2}
   m_sharedMaterial: {fileID: -8336773222943933363, guid: 50b8b11cb7ec29547a9ad48e13854097, type: 2}
@@ -831,6 +873,46 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 584769932}
   m_CullTransparentMesh: 1
+--- !u!114 &584769936
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 584769932}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56eb0353ae6e5124bb35b17aff880f16, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_StringReference:
+    m_TableReference:
+      m_TableCollectionName: GUID:6cf75b1bbc1d0f045a49a247a323383b
+    m_TableEntryReference:
+      m_KeyId: 1422857674752
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  m_FormatArguments: []
+  m_UpdateString:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 584769934}
+        m_TargetAssemblyTypeName: TMPro.TMP_Text, Unity.TextMeshPro
+        m_MethodName: set_text
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  references:
+    version: 2
+    RefIds: []
 --- !u!1 &604034367
 GameObject:
   m_ObjectHideFlags: 0
@@ -1121,6 +1203,7 @@ MonoBehaviour:
   pauseMenu: {fileID: 0}
   optionsMenu: {fileID: 0}
   creditsMenu: {fileID: 0}
+  WinnerScreen: {fileID: 0}
 --- !u!1 &703925681
 GameObject:
   m_ObjectHideFlags: 0
@@ -1272,6 +1355,7 @@ MonoBehaviour:
   pauseMenu: {fileID: 0}
   optionsMenu: {fileID: 0}
   creditsMenu: {fileID: 1109078352}
+  WinnerScreen: {fileID: 0}
 --- !u!1 &842561702
 GameObject:
   m_ObjectHideFlags: 0
@@ -1923,6 +2007,7 @@ MonoBehaviour:
   pauseMenu: {fileID: 0}
   optionsMenu: {fileID: 0}
   creditsMenu: {fileID: 1109078352}
+  WinnerScreen: {fileID: 0}
 --- !u!114 &1319059151
 MonoBehaviour:
   m_ObjectHideFlags: 0

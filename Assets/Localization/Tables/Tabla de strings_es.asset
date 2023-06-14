@@ -1,0 +1,59 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: Tabla de strings_es
+  m_EditorClassIdentifier: 
+  m_LocaleId:
+    m_Code: es
+  m_SharedData: {fileID: 11400000, guid: 6cf75b1bbc1d0f045a49a247a323383b, type: 2}
+  m_Metadata:
+    m_Items: []
+  m_TableData:
+  - m_Id: 193825939456
+    m_Localized: PAUSA
+    m_Metadata:
+      m_Items: []
+  - m_Id: 302433247232
+    m_Localized: CONTINUAR
+    m_Metadata:
+      m_Items: []
+  - m_Id: 522252525568
+    m_Localized: SALIR
+    m_Metadata:
+      m_Items: []
+  - m_Id: 847797624832
+    m_Localized: OPCIONES
+    m_Metadata:
+      m_Items: []
+  - m_Id: 971546370048
+    m_Localized: "M\xDASICA"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1061874900992
+    m_Localized: GUARDAR
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1422857674752
+    m_Localized: Jugar
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1506236243968
+    m_Localized: "cr\xE9ditos"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7412252483584
+    m_Localized: GRACIAS POR JUGAR
+    m_Metadata:
+      m_Items: []
+  references:
+    version: 2
+    RefIds: []
